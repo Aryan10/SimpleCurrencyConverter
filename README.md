@@ -6,21 +6,22 @@ Event @ MNNIT
 To Be Updated
 
 # Team: Error 404
-Event: Webster
-
-ID: 108
+`Team ID: 108`
 
 ### Members
 [Aryan 10](https://github.com/Aryan10)
+`20233265`
 
 • Team Leader, Project Manager, Website Administrator
 
 • JavaScript Lead Developer, HTML Developer
 
 [Vansh Gupta](https://github.com/Vansh07Gupta)
+`20233303`
 
 • HTML Lead Developer, CSS Developer
 
-Kumaraditya
+Kumaradithya Chadalavada
+`20233531`
 
 • CSS Lead Developer, HTML Developer
