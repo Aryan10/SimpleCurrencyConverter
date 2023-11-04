@@ -21,7 +21,7 @@ To Be Updated
 
 • HTML Lead Developer, CSS Developer
 
-Kumaradithya Chadalavada
+[Kumaradithya Chadalavada](https://github.com/clashking9999)
 `20233531`
 
 • CSS Lead Developer, HTML Developer
