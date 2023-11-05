@@ -1,43 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
     <title>Currency Conversion Calculator</title>
 </head>
 <body>
-    <center><h1><font><font face="Arial, sans-serif"></font>Currency Conversion Calculator</h1></center>
+    <center><h1><font face="Arial, sans-serif"></font>Currency Conversion Calculator</h1></center>
     <div>
-        <form action="action.php">
-        <label for="amount">Amount: <br></label>
-        <input type="number" id="amount" value="1" placeholder="Enter Amount" "width: 250px">
+      <form action="" onsubmit="conversion();return false">
+        <center>
+          <label for="inputAmount">Amount: <br></label>
+          <input type="number" id="inputAmount" value="1" placeholder="Enter Amount" required>
+          <br>
+          <label for="fromCurrency">From:</label>
+          <select id="fromCurrency" name="fromCurrency" style="width: 400px"></select>
     
-        <label for="from">From:</label>
-        <select id="From" name="currencyfr" style="width: 250px">
-            <optgroup >
-              <option selected>US Dollar</option>
-              <option>YEN</option>
-              <option >Ruble</option>
-              <option >Indian Rupee</option>
-            </optgroup>
-        </select>
-    
-        <button type="button" onclick="swapCurrencies">Swap</button>
+          <button type="button" onclick="swapCurrencies()">⇔</button>
 
-        <label for="to">To: </label>
-        <select id="to" name="currencyto" style="width: 250px">
-            <optgroup >
-                <option selected>Indian Rupee</option>
-                <option>YEN</option>
-                <option >Ruble</option>
-                <option >Indian Rupee</option>
-            </optgroup>
-        </select>
-        <button type="button" onclick="Favourites">Favourites</button>
-<br>
-        <br><center><button type="button" onclick="calculateConversion">Calculate</button></center>
-
-        </form>
+          <label for="toCurrency">To:</label>
+          <select id="toCurrency" name="toCurrency" style="width: 400px"></select>
+        
+          <button type="button" onclick="favouriteExchange()">☆</button>
+          <br><br>
+        </center>
+        <center><input type="submit" value="Convert"></center>
+        <label for="" id=""></label>
+      </form>
     </div>
+    <div id="outputAmount"></div>
+    <script src="script.js"></script>
+
 </body>
 </html>
