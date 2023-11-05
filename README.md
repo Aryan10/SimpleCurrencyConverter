@@ -1,20 +1,19 @@
-# [CodeSangam2023](https://sac.mnnit.ac.in/codesangam)
+# [CodeSangam2023](https://sac.mnnit.ac.in/codesangam)/Webster
+
 Event @ MNNIT
 
-# Webster
-### Project Details:
-To Be Updated
+# Team: <Error 404>
 
-# Team: Error 404
 `Team ID: 108`
 
 ### Members
+
 [Aryan 10](https://github.com/Aryan10)
 `20233265`
 
 • Team Leader, Project Manager, Website Administrator
 
-• JavaScript Lead Developer, HTML Developer
+• JavaScript Lead Developer, HTML Developer, CSS Developer
 
 [Vansh Gupta](https://github.com/Vansh07Gupta)
 `20233303`
@@ -25,3 +24,8 @@ To Be Updated
 `20233531`
 
 • CSS Lead Developer, HTML Developer
+
+
+## Project Overview
+
+### [Currency Converter](https://webster-error404.glitch.me)
