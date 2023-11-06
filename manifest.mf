@@ -1,0 +1,6 @@
+CACHE MANIFEST
+# Version: 1
+
+index.html
+script.js
+style.css

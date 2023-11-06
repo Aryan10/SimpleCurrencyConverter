@@ -1,13 +1,51 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css);
 
+html, body {
+  overflow-x: hidden;
+}
+body {
+  position: relative
+}
+
+.tab {
+    width: 120px;
+    font-size: 20px;
+}
+
+.button {
+    background-color: #00B9F1;
+    font-size: 18px;
+}
+
+.select {
+    width: 320px;
+}
+
+#convertButton {
+    font-size: 24px;
+    border-radius: 15px;
+}
+
+#inputAmount {
+    width: 300px;
+    height: 30px;
+    font-size: 25px;
+    text-align: center;
+}
+
 #outputAmount {
-            margin-top: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            width: 300px;
-            text-align: center;
-            position: absolute;
-            top: 30%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+    margin: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 300px;
+    text-align: center;
+}
+
+#activityBox {
+    margin: auto;
+    height: 160px;
+    width: 320px;
+    border: 1px solid #0000ff;
+    text-align: center;
+    overflow-y: auto;
 }
