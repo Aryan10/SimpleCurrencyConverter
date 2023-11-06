@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="manifest.mf">
 <head>
     
     <meta charset="UTF-8">
@@ -11,29 +11,45 @@
 </head>
 <body>
     <center><h1><font face="Arial, sans-serif"></font>Currency Conversion Calculator</h1></center>
+    
     <div>
       <form action="" onsubmit="conversion();return false">
         <center>
           <label for="inputAmount">Amount: <br></label>
           <input type="number" id="inputAmount" value="1" placeholder="Enter Amount" required>
-          <br>
+          <br><br>
+          
+          
           <label for="fromCurrency">From:</label>
-          <select id="fromCurrency" name="fromCurrency" style="width: 400px"></select>
-    
-          <button type="button" onclick="swapCurrencies()">⇔</button>
-
+          <select id="fromCurrency" name="fromCurrency" class="select" onchange="resetFavourite()"></select>
+          &nbsp;&nbsp;
+          <button type="button" class="button" onclick="swapCurrencies()">⇔</button>
+          &nbsp;&nbsp;
           <label for="toCurrency">To:</label>
-          <select id="toCurrency" name="toCurrency" style="width: 400px"></select>
-        
-          <button type="button" onclick="favouriteExchange()">☆</button>
+          <select id="toCurrency" name="toCurrency" class="select" onchange="resetFavourite()"></select>
+          &nbsp;&nbsp;
+          <button type="button" class="button" onclick="favouriteExchange()" id="favourite">☆</button>
+          
           <br><br>
         </center>
-        <center><input type="submit" value="Convert"></center>
+        <center><input id="convertButton" type="submit" value="Convert"></center>
         <label for="" id=""></label>
       </form>
     </div>
-    <div id="outputAmount"></div>
-    <script src="script.js"></script>
+  
+    <div style="text-align:center;">
+        <br>
+        <div id="outputAmount"><h3>&nbsp;</h3></div>
+        <br>
+        <button type="button" class="tab" onclick="showHistory()">History</button>
+        &nbsp;&nbsp;
+        <button type="button" class="tab" onclick="showFavourites()">Favourites</button>
+        <br>
+        <div id="activityBox">
 
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
 </body>
 </html>
