@@ -1,46 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" manifest="manifest.mf">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.min.js"></script>
-    <title>Currency Conversion Calculator</title>
+    <title>Error 404 - Currency Converter</title>
 </head>
 <body>
-    <center><h1><font face="Arial, sans-serif"></font>Currency Conversion Calculator</h1></center>
-    
-    <div>
-      <form action="" onsubmit="conversion();return false">
-        <center>
-          <label for="inputAmount">Amount: <br></label>
-          <input type="number" id="inputAmount" value="1" placeholder="Enter Amount" required>
-          <br><br>
-          
-          
-          <label for="fromCurrency">From:</label>
-          <select id="fromCurrency" name="fromCurrency" class="select" onchange="resetFavourite()"></select>
-          &nbsp;&nbsp;
-          <button type="button" class="button" onclick="swapCurrencies()">⇔</button>
-          &nbsp;&nbsp;
-          <label for="toCurrency">To:</label>
-          <select id="toCurrency" name="toCurrency" class="select" onchange="resetFavourite()"></select>
-          &nbsp;&nbsp;
-          <button type="button" class="button" onclick="favouriteExchange()" id="favourite">☆</button>
-          
-          <br><br>
-        </center>
-        <center><input id="convertButton" type="submit" value="Convert"></center>
-        <label for="" id=""></label>
-      </form>
+    <div class="header">
+      <h1><font face="Arial, sans-serif">&nbsp;&nbsp;Currency Converter</font></h1>
     </div>
-  
-    <div style="text-align:center;">
+    <br><br><br><br><br><br><br><br>
+    <div id="converterDiv">
+      <form action="" onsubmit="conversion();return false">
+        <label for="inputAmount">Amount: <br></label>
+        <input type="number" id="inputAmount" value="1" placeholder="Enter Amount" required>
         <br>
-        <div id="outputAmount"><h3>&nbsp;</h3></div>
         <br>
+        <label for="fromCurrency">From:</label>
+        <select id="fromCurrency" name="fromCurrency" class="select" onchange="resetFavourite()"></select>
+        &nbsp;&nbsp;
+        <button type="button" id="switchselect" class="smallButton" onclick="swapCurrencies()"></button>
+        &nbsp;&nbsp;
+        <label for="toCurrency">To:</label>
+        <select id="toCurrency" name="toCurrency" class="select" onchange="resetFavourite()"></select>
+        &nbsp;&nbsp;
+        <button type="button" id="favourite" class="smallButton" onclick="favouriteExchange()"></button>
+        <br>
+        <br>
+        <input id="convertButton" type="submit" value="Convert">
+      </form>
+      <div style="text-align:center;float:centre;"
+          <br>
+          <div id="outputAmount"><h3>&nbsp;</h3></div>
+          <br>
+      </div>
+    </div>
+    
+    <div id="activityDiv">
         <button type="button" class="tab" onclick="showHistory()">History</button>
         &nbsp;&nbsp;
         <button type="button" class="tab" onclick="showFavourites()">Favourites</button>
