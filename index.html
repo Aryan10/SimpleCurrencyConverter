@@ -10,9 +10,17 @@
 </head>
 <body>
     <div class="header">
-      <h1><font face="Arial, sans-serif">&nbsp;&nbsp;Currency Converter</font></h1>
+      <h1><font face="Arial, sans-serif">Currency Converter</font></h1>
     </div>
-    <br><br><br><br><br><br><br><br>
+    <br><br><br><br><br>
+    <div id="activityDiv">
+        <button type="button" class="tab" onclick="showHistory()">History</button>
+        &nbsp;&nbsp;
+        <button type="button" class="tab" onclick="showFavourites()">Favourites</button>
+        <br>
+        <div id="activityBox"></div>
+    </div> 
+    <br><br><br>
     <div id="converterDiv">
       <form action="" onsubmit="conversion();return false">
         <label for="inputAmount">Amount: <br></label>
@@ -24,7 +32,7 @@
         &nbsp;&nbsp;
         <button type="button" id="switchselect" class="smallButton" onclick="swapCurrencies()"></button>
         &nbsp;&nbsp;
-        <label for="toCurrency">To:</label>
+        <label for="toCurrency">&nbsp;&nbsp;To:</label>
         <select id="toCurrency" name="toCurrency" class="select" onchange="resetFavourite()"></select>
         &nbsp;&nbsp;
         <button type="button" id="favourite" class="smallButton" onclick="favouriteExchange()"></button>
@@ -37,16 +45,6 @@
           <div id="outputAmount"><h3>&nbsp;</h3></div>
           <br>
       </div>
-    </div>
-    
-    <div id="activityDiv">
-        <button type="button" class="tab" onclick="showHistory()">History</button>
-        &nbsp;&nbsp;
-        <button type="button" class="tab" onclick="showFavourites()">Favourites</button>
-        <br>
-        <div id="activityBox">
-
-        </div>
     </div>
     
     <script src="script.js"></script>

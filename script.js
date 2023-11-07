@@ -1,4 +1,5 @@
 const api = "https://api.exchangerate-api.com/v4/latest/USD";
+const trendsapi = (from, to, interval, outputsize) => `https://api.twelvedata.com/time_series?symbol=${from}/${to}&interval=${interval}&outputsize=${outputsize}&apikey=${process.env.API_KEY}`
 const dbrepo = "https://gist.githubusercontent.com/ksafranski/2973986/raw/5fda5e87189b066e11c1bf80bbfbecb556cf2cc1/Common-Currency.json";
 
 let amount = document.getElementById("inputAmount");
@@ -68,6 +69,7 @@ async function main() {
   $('#toCurrency').val(params.to).trigger('change');
   $('#inputAmount').val(params.amount).trigger('change');
   document.getElementById("switchselect").innerHTML = symbols.swap;
+  $('#activityBox').hide();
 }
 
 function swapCurrencies() {
@@ -111,6 +113,12 @@ function resetFavourite() {
 }
 
 function showFavourites() {
+  if (tab == 2) {
+    $('#activityBox').hide();
+    tab = 0;
+    return;
+  }
+  $('#activityBox').show();
   let favs = localStorage.favourites;
   if (!favs) return;
   let favarray = favs.split(';').slice(0, -1).map((f) => f.split(','));
@@ -123,6 +131,12 @@ function showFavourites() {
 }
 
 function showHistory() {
+  if (tab == 1) {
+    $('#activityBox').hide();
+    tab = 0;
+    return;
+  }
+  $('#activityBox').show();
   let hist = localStorage.history;
   if (!hist) return;
   let hisarray = hist.split(';').slice(0, -1).map((f) => f.split(','));
@@ -144,7 +158,7 @@ function linkExchange(from, to, amt) {
 }
 
 function linkExchangeHTML(array) {
-  return "<a href=\"" + linkExchange(array[0], array[1], '1') + "\">" + array[0] + " " + symbols.rightarrow + " " + array[1] + "</a><br>";
+  return "<input id=\"checkbox" + array[0] + array[1] + "\"type=\"checkbox\"><label for=\"checkbox" + array[0] + array[1] + "\">&nbsp;&nbsp;<a href=\"" + linkExchange(array[0], array[1], '1') + "\">" + array[0] + " " + symbols.rightarrow + " " + array[1] + "</a><br>";
 }
 
 function updatedOptions(array, selected) {
