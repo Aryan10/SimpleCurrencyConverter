@@ -13,8 +13,9 @@ body {
 .header {
     position: absolute;
     top: 0px;
+    padding-left: 50px;
     width: 100%;
-    background-color: #ccc;
+    background-color: #75E6DA;
 }
 
 .tab {
@@ -22,9 +23,17 @@ body {
     font-size: 20px;
 }
 
+.tab:active {
+    background-color: yellow;
+}
+
 .smallButton {
     font-size: 18px;
-    background-color: #00B9F1;
+    background-color: #00FFFF;
+}
+
+.smallButton:hover {
+    background-color: yellow;
 }
 
 .select {
@@ -34,6 +43,10 @@ body {
 #convertButton {
     font-size: 24px;
     border-radius: 15px;
+}
+
+#convertButton:hover {
+    background-color: yellow;
 }
 
 #inputAmount {
@@ -54,20 +67,33 @@ body {
 #activityBox {
     margin: auto;
     height: 400px;
-    width: 320px;
+    width: auto;
     border: 1px solid #0000ff;
-    text-align: center;
+    display: none;
+    text-align: left;
     overflow-y: auto;
 }
 
 #activityDiv {
     text-align: center;
     float: right;
-    margin-right: 50px;
+    margin-right: 10px;
 }
 
 #converterDiv {
     text-align: center;
     float: left;
-    margin-left: 50px;
+    margin-left: 100px;
+}
+
+@media only screen and (max-width: 768px) {
+  #activityBox {
+      height: 100px;
+  }
+  
+  #converterDiv {
+      text-align: center;
+      float: center;
+      margin-left: 0px;
+  }
 }
