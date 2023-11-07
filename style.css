@@ -1,10 +1,20 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css);
 
 html, body {
-  overflow-x: hidden;
+    margin: 0px;
+    height: 100%;
+    overflow-x: hidden;
 }
+
 body {
-  position: relative
+    position: relative
+}
+
+.header {
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    background-color: #ccc;
 }
 
 .tab {
@@ -12,9 +22,9 @@ body {
     font-size: 20px;
 }
 
-.button {
-    background-color: #00B9F1;
+.smallButton {
     font-size: 18px;
+    background-color: #00B9F1;
 }
 
 .select {
@@ -43,9 +53,21 @@ body {
 
 #activityBox {
     margin: auto;
-    height: 160px;
+    height: 400px;
     width: 320px;
     border: 1px solid #0000ff;
     text-align: center;
     overflow-y: auto;
+}
+
+#activityDiv {
+    text-align: center;
+    float: right;
+    margin-right: 50px;
+}
+
+#converterDiv {
+    text-align: center;
+    float: left;
+    margin-left: 50px;
 }

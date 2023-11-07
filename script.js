@@ -9,6 +9,9 @@ let output = document.getElementById("outputAmount");
 let box = document.getElementById("activityBox");
 var tab = 0;
 
+let winurl = String(window.location).split('?');
+var params = {};
+
 // api, main and input functions
 var res;
 var db;
@@ -35,6 +38,7 @@ async function recall() {
 }
 
 async function main() {
+  // fetch from api
   res = await jsonfetch(api);
   if (res) localStorage.apires = JSON.stringify(res);
   if (!res && localStorage.apires) res = JSON.parse(localStorage.apires);
@@ -42,13 +46,28 @@ async function main() {
   if (db) db.INR.symbol_native = '₹';
   else db = {};
   
+  // select2 options
   let currencies = (res ? Object.keys(res.rates) : []);
   removeArrayElement(currencies, 'INR');
   removeArrayElement(currencies, 'USD');
   fromC.innerHTML = updatedOptions(currencies);
   toC.innerHTML = updatedOptions(currencies);
-  $('#fromCurrency').val('USD').trigger('change');
-  $('#toCurrency').val('INR').trigger('change');
+  
+  // other components
+  if (winurl[1]) {
+      winurl[1].split('&').forEach(function(pair) {
+        let p = pair.split('=');
+        if (p.length == 1) p.push(null);
+        params[p[0]] = p[1];
+      });
+  }
+  if (!params.from) params.from = 'USD';
+  if (!params.to) params.to = 'INR';
+  if (!params.amount) params.amount = amount.value;
+  $('#fromCurrency').val(params.from).trigger('change');
+  $('#toCurrency').val(params.to).trigger('change');
+  $('#inputAmount').val(params.amount).trigger('change');
+  document.getElementById("switchselect").innerHTML = symbols.swap;
 }
 
 function swapCurrencies() {
@@ -72,6 +91,8 @@ async function conversion() {
   hist = parsed + hist.replace(parsed, '');
   localStorage.history = hist;
   if (tab == 1) showHistory();
+  
+  window.history.pushState({}, document.title, linkExchange(fromC.value, toC.value, amount.value));
 }
 
 function favouriteExchange() {
@@ -80,13 +101,13 @@ function favouriteExchange() {
   if (!favs.includes(parsed)) {
     favs = favs + parsed;
   }
-  favBtn.innerHTML = starred;
+  favBtn.innerHTML = symbols.starred;
   localStorage.favourites = favs;
   if (tab == 2) showFavourites()
 }
 
 function resetFavourite() {
-  favBtn.innerHTML = hollowstar;
+  favBtn.innerHTML = symbols.hollowstar;
 }
 
 function showFavourites() {
@@ -95,7 +116,7 @@ function showFavourites() {
   let favarray = favs.split(';').slice(0, -1).map((f) => f.split(','));
   let HTML = "";
   favarray.forEach(function (a) {
-    HTML += a[0] + " " + rightarrow + " " + a[1] + "<br>";
+    HTML += linkExchangeHTML(a);
   });
   box.innerHTML = HTML;
   tab = 2;
@@ -107,7 +128,7 @@ function showHistory() {
   let hisarray = hist.split(';').slice(0, -1).map((f) => f.split(','));
   let HTML = "";
   hisarray.forEach(function (a) {
-    HTML += a[0] + " " + rightarrow + " " + a[1] + "<br>";
+    HTML += linkExchangeHTML(a);
   });
   box.innerHTML = HTML;
   tab = 1;
@@ -116,6 +137,14 @@ function showHistory() {
 // utility functions
 function removeArrayElement(array, key) {
   array.splice(array.indexOf(key), 1);
+}
+
+function linkExchange(from, to, amt) {
+  return winurl[0] + "?from=" + from + "&to=" + to + "&amount=" + amt;
+}
+
+function linkExchangeHTML(array) {
+  return "<a href=\"" + linkExchange(array[0], array[1], '1') + "\">" + array[0] + " " + symbols.rightarrow + " " + array[1] + "</a><br>";
 }
 
 function updatedOptions(array, selected) {
@@ -138,6 +167,9 @@ $(function () {
   $("select").select2();
 });
 
-const hollowstar = '☆';
-const starred = '★';
-const rightarrow = "→";
+const symbols = {
+  hollowstar: '☆',
+  starred: '★',
+  rightarrow: "→",
+  swap: "⇆"
+}
