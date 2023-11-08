@@ -105,47 +105,71 @@ function favouriteExchange() {
   }
   favBtn.innerHTML = symbols.starred;
   localStorage.favourites = favs;
-  if (tab == 2) showFavourites()
+  if (tab == 2) showFavourites();
 }
 
 function resetFavourite() {
   favBtn.innerHTML = symbols.hollowstar;
 }
 
-function showFavourites() {
-  if (tab == 2) {
+var deleteHTML = '<button type="button" id="deleteButton" onclick="deleteSelected()">&nbsp;🗑&nbsp;</button>';
+
+function showFavourites(clicked) {
+  if (tab == 2 && clicked) {
     $('#activityBox').hide();
     tab = 0;
     return;
   }
   $('#activityBox').show();
   let favs = localStorage.favourites;
-  if (!favs) return;
   let favarray = favs.split(';').slice(0, -1).map((f) => f.split(','));
   let HTML = "";
   favarray.forEach(function (a) {
-    HTML += linkExchangeHTML(a);
+    HTML += linkExchangeHTML(a, 'f');
   });
-  box.innerHTML = HTML;
+  box.innerHTML = deleteHTML + HTML;
   tab = 2;
 }
 
-function showHistory() {
-  if (tab == 1) {
+function showHistory(clicked) {
+  if (tab == 1 && clicked) {
     $('#activityBox').hide();
     tab = 0;
     return;
   }
   $('#activityBox').show();
   let hist = localStorage.history;
-  if (!hist) return;
   let hisarray = hist.split(';').slice(0, -1).map((f) => f.split(','));
   let HTML = "";
   hisarray.forEach(function (a) {
-    HTML += linkExchangeHTML(a);
+    HTML += linkExchangeHTML(a, 'h');
   });
-  box.innerHTML = HTML;
+  box.innerHTML = deleteHTML + HTML;
   tab = 1;
+}
+
+var checked = [];
+
+function checkboxStateChange(cid) {
+  let cbox = document.getElementById(cid);
+  if (cbox.checked) checked.push(cid);
+  else removeArrayElement(checked, cid);
+  if (checked.length > 0) $('#deleteButton').show();
+  else $('#deleteButton').hide();
+}
+
+function deleteSelected() {
+  let stype = '';
+  if (tab == 1) stype = 'history';
+  else if (tab == 2) stype = 'favourites';
+  else return;
+  let storage = localStorage[stype];
+  checked.forEach(c => {
+    storage = storage.replace(c.slice(-6, -3) + ',' + c.slice(-3) + ';', '');
+  });
+  localStorage[stype] = storage;
+  checked = [];
+  tab == 1 ? showHistory() : showFavourites();
 }
 
 // utility functions
@@ -157,8 +181,9 @@ function linkExchange(from, to, amt) {
   return winurl[0] + "?from=" + from + "&to=" + to + "&amount=" + amt;
 }
 
-function linkExchangeHTML(array) {
-  return "<input id=\"checkbox" + array[0] + array[1] + "\"type=\"checkbox\"><label for=\"checkbox" + array[0] + array[1] + "\">&nbsp;&nbsp;<a href=\"" + linkExchange(array[0], array[1], '1') + "\">" + array[0] + " " + symbols.rightarrow + " " + array[1] + "</a><br>";
+function linkExchangeHTML(array, idkey) {
+  let id = idkey + 'checkbox' + array[0] + array[1];
+  return `<input id="${id}" type="checkbox" onclick="checkboxStateChange('${id}')"><label for="checkbox${id} + array[0] + array[1]">&nbsp;&nbsp;<a href="${linkExchange(array[0], array[1], '1')}">${array[0] + " " + symbols.rightarrow + " " + array[1]}</a><br>`;
 }
 
 function updatedOptions(array, selected) {
