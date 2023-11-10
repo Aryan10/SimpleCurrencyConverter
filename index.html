@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="header">
-      <h1><font face="Arial, sans-serif">Currency Converter</font></h1>
+      <h1><font face="Arial, sans-serif">Error 404-Currency Converter</font></h1>
     </div>
     
     <div id="activityDiv">
@@ -21,32 +21,55 @@
         <div id="activityBox"></div>
     </div> 
     
-    <div id="converterDiv">
-      <form action="" onsubmit="conversion();return false">
-        <label for="inputAmount">Amount: <br></label>
-        <input type="number" id="inputAmount" value="1" placeholder="Enter Amount" required>
-        <br>
-        <br>
-        <label for="fromCurrency">From:</label>
-        <select id="fromCurrency" name="fromCurrency" class="select2" onchange="resetFavourite()"></select>
-        &nbsp;&nbsp;
-        <button type="button" id="switchselect" class="smallButton" onclick="swapCurrencies()"></button>
-        &nbsp;&nbsp;
-        <label for="toCurrency">&nbsp;&nbsp;To:</label>
-        <select id="toCurrency" name="toCurrency" class="select2" onchange="resetFavourite()"></select>
-        &nbsp;&nbsp;
-        <button type="button" id="favourite" class="smallButton" onclick="favouriteExchange()"></button>
-        <br>
-        <br>
-        <input id="convertButton" type="submit" value="Convert">
-      </form>
-      <div style="float:centre;"
+    <div id="leftDiv">
+      <div id="converterDiv">
+        <form action="" onsubmit="conversion();return false">
+          <label for="inputAmount">Amount: <br></label>
+          <input type="number" id="inputAmount" value="1" placeholder="Enter Amount" required>
           <br>
-          <div id="outputAmount"><h3>&nbsp;</h3></div>
           <br>
+          <label for="fromCurrency">From:</label>
+          <select id="fromCurrency" name="fromCurrency" class="select2" onchange="resetFavourite()"></select>
+          &nbsp;&nbsp;
+          <button type="button" id="switchselect" class="smallButton" onclick="swapCurrencies()"></button>
+          &nbsp;&nbsp;
+          <label for="toCurrency">&nbsp;&nbsp;To:</label>
+          <select id="toCurrency" name="toCurrency" class="select2" onchange="resetFavourite()"></select>
+          &nbsp;&nbsp;
+          <button type="button" id="favourite" class="smallButton" onclick="favouriteExchange()"></button>
+          <br>
+          <br>
+          <input id="convertButton" type="submit" value="Convert">
+        </form>
+        <div style="float:centre;"
+            <br>
+            <div id="outputAmount"><h3>&nbsp;</h3></div>
+            <br>
+        </div>
+      </div>
+    
+      <div id="trendsDiv">
+        <select id="time_series" style="float:left;margin-left:1px;width:200px;" onchange="onTrendsSelect()">
+          <option value="1h-24">Last 24 Hours</option>
+          <option value="1day-7">Last 7 Days</option>
+          <option value="1day-30" selected>Last 30 Days</option>
+          <option value="1month-12">Last 12 Months</option>
+        </select>
+        <button type="button" id="refreshButton" style="float:right;margin-right:3px;" onclick="displayTrends()">Refresh</button>
+        <br>
+        <canvas id="trendsDisplay" style="float:left;"></canvas>
       </div>
     </div>
-    
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
+    
+    <footer>
+      <p>&copy; 2023 ERROR 404 Currency Converter. All rights not found. No errors, just conversions!</p>
+      <p>404 Main Street, Conversion City | support@error404currency.com</p>
+      <p>Follow us on <a href="https://twitter.com/error404currency" target="_blank">Twitter</a> | Like us on <a href="https://facebook.com/error404currency" target="_blank">Facebook</a></p>
+    </footer>
+
+    
 </body>
 </html>
