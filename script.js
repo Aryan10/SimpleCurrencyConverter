@@ -1,3 +1,5 @@
+const debug = true;
+
 const api = "https://api.exchangerate-api.com/v4/latest/USD";
 const trendsapi = (from, to, interval, outputsize) => `https://api.twelvedata.com/time_series?symbol=${from}/${to}&interval=${interval}&outputsize=${outputsize}&apikey=493a052a7b904dd08d6b48ec2d81a867`
 const dbrepo = "https://gist.githubusercontent.com/ksafranski/2973986/raw/5fda5e87189b066e11c1bf80bbfbecb556cf2cc1/Common-Currency.json";
@@ -71,7 +73,7 @@ async function main() {
   $('#fromCurrency').val(params.from).trigger('change');
   $('#toCurrency').val(params.to).trigger('change');
   $('#inputAmount').val(params.amount).trigger('change');
-  $('#time_series').val(params.time_series).trigger('change');
+  $('#select_time_series').val(params.time_series).trigger('change');
   document.getElementById("switchselect").innerHTML = symbols.swap;
   $('#activityBox').hide();
 }
@@ -179,8 +181,10 @@ function deleteSelected() {
 function onTrendsSelect() {
   params.time_series = select_time_series.value;
   updateURL();
-  displayTrends();
+  if (!debug) displayTrends();
 }
+
+var chart;
 
 async function displayTrends() {
   let {from, to} = params;
@@ -203,18 +207,25 @@ async function displayTrends() {
     labels.push(labelDateParser(d.datetime, val[0].slice(1)));
     data.push(d.close);
   });
-
-  new Chart(canvas, {
+  labels = labels.reverse();
+  data = data.reverse();
+  
+  let config = {
     type: 'line',
     data: {
       labels,
       datasets: [{
-        label: `Exchange Rate: ${params.from} -> ${params.to}`,
+        label: `${from} ${symbols.rightarrow} ${to}`,
         data,
         borderWidth: 1
       }]
     }
-  });
+  }
+  if (!chart) chart = new Chart(canvas, config);
+  else {
+    chart.data = config.data;
+    chart.update();
+  }
 }
 
 // utility functions
@@ -226,17 +237,22 @@ function updateURL() {
   window.history.pushState({}, document.title, linkExchange());
 }
 
-function linkExchange() {
+function linkExchange(overwrite) {
+  let args = {...params};
+  if (overwrite) Object.keys(overwrite.forEach(function(id) {
+    if (id === false) delete args[id];
+    args[id] = overwrite[id];
+  }));
   let paramstr = [];
   Object.keys(params).forEach(function(id)  {
-    paramstr.push(id + '=' + params[id]);
+    paramstr.push(id + '=' + args[id]);
   });
   return winurl[0] + "?" + paramstr.join('&');
 }
 
 function linkExchangeHTML(array, idkey) {
   let id = idkey + 'checkbox' + array[0] + array[1];
-  return `<input id="${id}" type="checkbox" onclick="checkboxStateChange('${id}')"><label for="checkbox${id} + array[0] + array[1]">&nbsp;&nbsp;<a href="${linkExchange(array[0], array[1], '1')}">${array[0] + " " + symbols.rightarrow + " " + array[1]}</a><br>`;
+  return `<input id="${id}" type="checkbox" onclick="checkboxStateChange('${id}')"><label for="checkbox${id} + array[0] + array[1]">&nbsp;&nbsp;<a href="${linkExchange({from: array[0], to: array[1], amount: '1', time_series: false})}">${array[0] + " " + symbols.rightarrow + " " + array[1]}</a><br>`;
 }
 
 function updatedOptions(array, selected) {
@@ -257,11 +273,13 @@ function labelDateParser(time, interval) {
   switch(interval) {
     case "min":
     case "h":
-      return date.getHours() + ':' + date.getMinutes();
+      return time.split(' ')[1].slice(0, 5);
     
     case "day":
-    case "month":
       return date.getDate() + ' ' + months[date.getMonth()];
+      
+    case "month":
+      return date.getDate() + ' ' + months[date.getMonth()] + ' ' + String(date.getFullYear()).slice(2);
   }
   
 }
@@ -280,4 +298,4 @@ const symbols = {
   swap: "⇆"
 }
 
-const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
