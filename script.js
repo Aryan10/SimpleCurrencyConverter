@@ -1,5 +1,5 @@
 const api = "https://api.exchangerate-api.com/v4/latest/USD";
-const trendsapi = (from, to, interval, outputsize) => `https://api.twelvedata.com/time_series?symbol=${from}/${to}&interval=${interval}&outputsize=${outputsize}&apikey=${process.env.API_KEY}`
+const trendsapi = (from, to, interval, outputsize) => `https://api.twelvedata.com/time_series?symbol=${from}/${to}&interval=${interval}&outputsize=${outputsize}&apikey=493a052a7b904dd08d6b48ec2d81a867`
 const dbrepo = "https://gist.githubusercontent.com/ksafranski/2973986/raw/5fda5e87189b066e11c1bf80bbfbecb556cf2cc1/Common-Currency.json";
 
 let amount = document.getElementById("inputAmount");
@@ -8,6 +8,8 @@ let toC = document.getElementById("toCurrency");
 let favBtn = document.getElementById("favourite")
 let output = document.getElementById("outputAmount");
 let box = document.getElementById("activityBox");
+let select_time_series = document.getElementById("time_series");
+let canvas = document.getElementById('trendsDisplay');
 var tab = 0;
 
 let winurl = String(window.location).split('?');
@@ -54,7 +56,7 @@ async function main() {
   fromC.innerHTML = updatedOptions(currencies);
   toC.innerHTML = updatedOptions(currencies);
   
-  // other components
+  // other components and parameters
   if (winurl[1]) {
       winurl[1].split('&').forEach(function(pair) {
         let p = pair.split('=');
@@ -65,9 +67,11 @@ async function main() {
   if (!params.from) params.from = 'USD';
   if (!params.to) params.to = 'INR';
   if (!params.amount) params.amount = amount.value;
+  if (!params.time_series) params.time_series = '1day-30';
   $('#fromCurrency').val(params.from).trigger('change');
   $('#toCurrency').val(params.to).trigger('change');
   $('#inputAmount').val(params.amount).trigger('change');
+  $('#time_series').val(params.time_series).trigger('change');
   document.getElementById("switchselect").innerHTML = symbols.swap;
   $('#activityBox').hide();
 }
@@ -94,7 +98,7 @@ async function conversion() {
   localStorage.history = hist;
   if (tab == 1) showHistory();
   
-  window.history.pushState({}, document.title, linkExchange(fromC.value, toC.value, amount.value));
+  updateURL();
 }
 
 function favouriteExchange() {
@@ -172,13 +176,62 @@ function deleteSelected() {
   tab == 1 ? showHistory() : showFavourites();
 }
 
+function onTrendsSelect() {
+  params.time_series = select_time_series.value;
+  updateURL();
+}
+
+async function displayTrends() {
+  let {from, to} = params;
+  let fromRate = res.rates[params.from];
+  let toRate = res.rates[params.to];
+  var convertedAmount = toRate / fromRate;
+  if (convertedAmount < 1) {
+    let temp = from;
+    from = to;
+    to = temp;
+  }
+  let val = params.time_series.split('-');
+  alert(val);
+  // trends api
+  let trendyurl = trendsapi(from, to, val[0], val[1]);
+  let fetched = await fetch(trendyurl);
+  let trend = await fetched.json();
+  let labels = [], data = [];
+  if (trend.status != 'ok') return;
+  trend.values.forEach(d => {
+    labels.push(labelDateParser(d.datetime));
+    data.push(d.close);
+  });
+
+  new Chart(canvas, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: `Exchange Rate: ${params.from} -> ${params.to}`,
+        data,
+        borderWidth: 1
+      }]
+    }
+  });
+}
+
 // utility functions
 function removeArrayElement(array, key) {
   array.splice(array.indexOf(key), 1);
 }
 
-function linkExchange(from, to, amt) {
-  return winurl[0] + "?from=" + from + "&to=" + to + "&amount=" + amt;
+function updateURL() {
+  window.history.pushState({}, document.title, linkExchange());
+}
+
+function linkExchange() {
+  let paramstr = [];
+  Object.keys(params).forEach(function(id)  {
+    paramstr.push(id + '=' + params[id]);
+  });
+  return winurl[0] + "?" + paramstr.join('&');
 }
 
 function linkExchangeHTML(array, idkey) {
@@ -199,11 +252,25 @@ function updatedOptions(array, selected) {
   return HTML;
 }
 
+function labelDateParser(time, interval) {
+  let date = new Date(time.replace(' ').replace(':'));
+  switch(interval) {
+    case "min":
+    case "h":
+      return date.getHours() + ':' + date.getMinutes();
+    
+    case "day":
+    case "month":
+      return date.getDate() + ' ' + months[date.getMonth()];
+  }
+  
+}
+
 // begin
 main();
 
 $(function () {
-  $("select").select2();
+  $(".select2").select2();
 });
 
 const symbols = {
@@ -212,3 +279,5 @@ const symbols = {
   rightarrow: "→",
   swap: "⇆"
 }
+
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];

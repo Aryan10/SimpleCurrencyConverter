@@ -73,7 +73,7 @@ body {
 
 #activityBox {
     margin: auto;
-    height: 400px;
+    height: 308px;
     width: auto;
     border: 1px solid #0000ff;
     display: none;
@@ -88,14 +88,27 @@ body {
     margin-top: 72px;
 }
 
+#leftDiv {
+    float: left;
+    margin-left: 100px;
+    margin-top: 120px;
+}
+
 #converterDiv {
     box-shadow: 3px 3px;
     border-radius: 15px;
     padding: 15px;
     text-align: center;
-    float: left;
-    margin-left: 100px;
-    margin-top: 120px;
+    width: 850px;
+}
+
+#trendsDiv {
+    border: 1px solid #0000ff;
+    height: 400px;
+    width: 100%;
+    padding-top: 1px;
+    margin: 1px;
+    margin-top: 20px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -103,9 +116,25 @@ body {
       height: 100px;
   }
   
-  #converterDiv {
+  #leftDiv {
       text-align: center;
       float: center;
       margin-left: 0px;
   }
+  
+  #converterDiv {
+      width: auto;
+  }
 }
+footer {
+    margin-top: auto;
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 20px;
+}
+
+
+
+
+
+
