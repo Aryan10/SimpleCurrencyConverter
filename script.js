@@ -179,6 +179,7 @@ function deleteSelected() {
 function onTrendsSelect() {
   params.time_series = select_time_series.value;
   updateURL();
+  displayTrends();
 }
 
 async function displayTrends() {
@@ -192,7 +193,6 @@ async function displayTrends() {
     to = temp;
   }
   let val = params.time_series.split('-');
-  alert(val);
   // trends api
   let trendyurl = trendsapi(from, to, val[0], val[1]);
   let fetched = await fetch(trendyurl);
@@ -200,7 +200,7 @@ async function displayTrends() {
   let labels = [], data = [];
   if (trend.status != 'ok') return;
   trend.values.forEach(d => {
-    labels.push(labelDateParser(d.datetime));
+    labels.push(labelDateParser(d.datetime, val[0].slice(1)));
     data.push(d.close);
   });
 

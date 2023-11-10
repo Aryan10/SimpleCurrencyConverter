@@ -126,7 +126,9 @@ body {
       width: auto;
   }
 }
+
 footer {
+    float: right;
     margin-top: auto;
     background-color: #f0f0f0;
     text-align: center;
