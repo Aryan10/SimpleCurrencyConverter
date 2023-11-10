@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# Version: 5
+# Version: 7
 
 index.html
 script.js
