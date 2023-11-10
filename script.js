@@ -238,11 +238,7 @@ function updateURL() {
 }
 
 function linkExchange(overwrite) {
-  let args = {...params};
-  if (overwrite) Object.keys(overwrite.forEach(function(id) {
-    if (id === false) delete args[id];
-    args[id] = overwrite[id];
-  }));
+  let args = overwrite || params;
   let paramstr = [];
   Object.keys(params).forEach(function(id)  {
     paramstr.push(id + '=' + args[id]);
