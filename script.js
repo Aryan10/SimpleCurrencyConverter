@@ -17,7 +17,7 @@ var tab = 0;
 let winurl = String(window.location).split('?');
 var params = {};
 
-// api, main and input functions
+// Web Fuctions
 var res;
 var db;
 
@@ -73,10 +73,12 @@ async function main() {
   $('#fromCurrency').val(params.from).trigger('change');
   $('#toCurrency').val(params.to).trigger('change');
   $('#inputAmount').val(params.amount).trigger('change');
-  $('#select_time_series').val(params.time_series).trigger('change');
+  $('#time_series').val(params.time_series).trigger('change');
   document.getElementById("switchselect").innerHTML = symbols.swap;
   $('#activityBox').hide();
 }
+
+// // Converter Division
 
 function swapCurrencies() {
   let temp = fromC.value;
@@ -118,12 +120,26 @@ function resetFavourite() {
   favBtn.innerHTML = symbols.hollowstar;
 }
 
-var deleteHTML = '<button type="button" id="deleteButton" onclick="deleteSelected()">&nbsp;🗑&nbsp;</button>';
+// // Activity Division
+
+function tabUpdate(newtab) {
+  tab = newtab;
+  [1,2,3].forEach(function(i) {
+    let t = document.getElementById("tab" + i);
+    if (tab == i) {
+      t.className += " activetab";
+    } else {
+      t.className = "tab";
+    }
+  });
+}
+
+var deleteHTML = (sym) => `<button type="button" id="deleteButton" onclick="deleteSelected()">&nbsp;${sym}&nbsp;</button>`;
 
 function showFavourites(clicked) {
   if (tab == 2 && clicked) {
     $('#activityBox').hide();
-    tab = 0;
+    tabUpdate(0);
     return;
   }
   $('#activityBox').show();
@@ -133,14 +149,15 @@ function showFavourites(clicked) {
   favarray.forEach(function (a) {
     HTML += linkExchangeHTML(a, 'f');
   });
-  box.innerHTML = deleteHTML + HTML;
-  tab = 2;
+  box.innerHTML = deleteHTML(symbols.delete) + HTML;
+  initchecklist();
+  tabUpdate(2);
 }
 
 function showHistory(clicked) {
   if (tab == 1 && clicked) {
     $('#activityBox').hide();
-    tab = 0;
+    tabUpdate(0);
     return;
   }
   $('#activityBox').show();
@@ -150,11 +167,23 @@ function showHistory(clicked) {
   hisarray.forEach(function (a) {
     HTML += linkExchangeHTML(a, 'h');
   });
-  box.innerHTML = deleteHTML + HTML;
-  tab = 1;
+  box.innerHTML = deleteHTML(symbols.delete) + HTML;
+  initchecklist();
+  tabUpdate(1);
+}
+
+function showCalculator(clicked) {
+   
 }
 
 var checked = [];
+
+function initchecklist() {
+  $(".checklist").on('click', function(e) {
+    if (e.target !== this) return;
+    document.getElementById(this.id.slice(3)).click();
+  });
+}
 
 function checkboxStateChange(cid) {
   let cbox = document.getElementById(cid);
@@ -178,15 +207,40 @@ function deleteSelected() {
   tab == 1 ? showHistory() : showFavourites();
 }
 
+function linkExchangeHTML(array, idkey) {
+  let id = idkey + 'checkbox' + array[0] + array[1];
+  return `<div class="checklist" id="div${id}"><input id="${id}" type="checkbox" onclick="checkboxStateChange('${id}')"><label for="checkbox${id} + array[0] + array[1]">&nbsp;&nbsp;<a href="${linkExchange({from: array[0], to: array[1], amount: '1'})}">${array[0] + " " + symbols.rightarrow + " " + array[1]}</a></div>`;
+}
+
+// // Trends Division
+var chart;
+let intervals = ["1min", "5min", "15min", "30min", "45min", "1h", "2h", "4h", "8h", "1day", "1week", "1month"];
+
 function onTrendsSelect() {
-  params.time_series = select_time_series.value;
+  let sel = select_time_series.value;
+  if (sel == "custom") {
+    let args = params.time_series.split('-');
+    if (intervals.includes(args[0])) {
+      $('#ts_interval').val(args[0]).trigger('change');
+      $('#ts_size').val(args[1]).trigger('change');
+    }
+    return $('.ts_custom').show();
+  }
+  else $('.ts_custom').hide();
+  params.time_series = sel;
   updateURL();
   if (!debug) displayTrends();
 }
 
-var chart;
-
 async function displayTrends() {
+  if (select_time_series.value == "custom") {
+    let interval = document.getElementById("ts_interval").value;
+    let size = document.getElementById("ts_size").value;
+    if (interval && size) {
+      params.time_series = interval + '-' + size;
+      updateURL();
+    }
+  }
   let {from, to} = params;
   let fromRate = res.rates[params.from];
   let toRate = res.rates[params.to];
@@ -197,6 +251,8 @@ async function displayTrends() {
     to = temp;
   }
   let val = params.time_series.split('-');
+  let index = String(parseInt(val[0])).length;
+  
   // trends api
   let trendyurl = trendsapi(from, to, val[0], val[1]);
   let fetched = await fetch(trendyurl);
@@ -204,7 +260,7 @@ async function displayTrends() {
   let labels = [], data = [];
   if (trend.status != 'ok') return;
   trend.values.forEach(d => {
-    labels.push(labelDateParser(d.datetime, val[0].slice(1)));
+    labels.push(labelDateParser(d.datetime, val[0].slice(index)));
     data.push(d.close);
   });
   labels = labels.reverse();
@@ -228,7 +284,7 @@ async function displayTrends() {
   }
 }
 
-// utility functions
+// Utility Functions
 function removeArrayElement(array, key) {
   array.splice(array.indexOf(key), 1);
 }
@@ -240,15 +296,10 @@ function updateURL() {
 function linkExchange(overwrite) {
   let args = overwrite || params;
   let paramstr = [];
-  Object.keys(params).forEach(function(id)  {
+  Object.keys(args).forEach(function(id)  {
     paramstr.push(id + '=' + args[id]);
   });
   return winurl[0] + "?" + paramstr.join('&');
-}
-
-function linkExchangeHTML(array, idkey) {
-  let id = idkey + 'checkbox' + array[0] + array[1];
-  return `<input id="${id}" type="checkbox" onclick="checkboxStateChange('${id}')"><label for="checkbox${id} + array[0] + array[1]">&nbsp;&nbsp;<a href="${linkExchange({from: array[0], to: array[1], amount: '1', time_series: false})}">${array[0] + " " + symbols.rightarrow + " " + array[1]}</a><br>`;
 }
 
 function updatedOptions(array, selected) {
@@ -280,18 +331,20 @@ function labelDateParser(time, interval) {
   
 }
 
-// begin
+// Press Start
 main();
 
 $(function () {
   $(".select2").select2();
+  if (debug) $(".debug").show();
 });
 
 const symbols = {
   hollowstar: '☆',
   starred: '★',
   rightarrow: "→",
-  swap: "⇆"
+  swap: "⇆",
+  delete: "🗑"
 }
 
 const months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];

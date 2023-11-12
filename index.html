@@ -10,22 +10,23 @@
 </head>
 <body>
     <div class="header">
-      <h1><font face="Arial, sans-serif">Currency Converter</font></h1>
+      <h1><font face="Brush Script MT, cursive" style="color:#fffacd;">Currency Converter</font></h1>
     </div>
-    
+  
     <div id="activityDiv">
-        <button type="button" class="tab" onclick="showHistory(true)">History</button>
-        &nbsp;&nbsp;
-        <button type="button" class="tab" onclick="showFavourites(true)">Favourites</button>
-        <br>
+        <div id="activityTabs">
+          <button type="button" id="tab1" class="tab" onclick="showHistory(true)">History</button>
+          <button type="button" id="tab2" class="tab" onclick="showFavourites(true)">Favourites</button>
+          <button type="button" id="tab3" class="tab" onclick="showCalculator()">Calculator  </button>
+        </div>
         <div id="activityBox"></div>
-    </div> 
+    </div>
     
     <div id="leftDiv">
       <div id="converterDiv">
         <form action="" onsubmit="conversion();return false">
           <label for="inputAmount">Amount: <br></label>
-          <input type="number" id="inputAmount" value="1" placeholder="Enter Amount" required>
+          <input type="number" id="inputAmount" value="1" step="0.01" placeholder="Enter Amount" required>
           <br>
           <br>
           <label for="fromCurrency">From:</label>
@@ -49,13 +50,33 @@
       </div>
     
       <div id="trendsDiv">
-        <select id="time_series" style="float:left;margin-left:1px;width:200px;" onchange="onTrendsSelect()">
+        <select id="time_series" class="select1" onchange="onTrendsSelect()">
+          <option value="custom" selected>Custom...</option>
           <option value="1h-24">Last 24 Hours</option>
           <option value="1day-7">Last 7 Days</option>
           <option value="1day-30" selected>Last 30 Days</option>
           <option value="1month-12">Last 12 Months</option>
+          <option value="1month-120">Last 10 Years</option>
         </select>
         <button type="button" id="refreshButton" style="float:right;margin-right:3px;" onclick="displayTrends()">Refresh</button>
+        <br class="ts-mobile-break">
+        <select id="ts_interval" class="select1 ts_custom" style="display:none;">
+          <option style="display:none;" selected>Select Interval</option>
+          <option value="1min">1 Minute</option>
+          <option value="5min">5 Minute</option>
+          <option value="15min">15 Minute</option>
+          <option value="30min">30 Minute</option>
+          <option value="45min">45 Minute</option>
+          <option value="1h">1 Hour</option>
+          <option value="2h">2 Hour</option>
+          <option value="4h">4 Hour</option>
+          <option value="8h">8 Hour</option>
+          <option value="1day">1 Day</option>
+          <option value="1week">1 Week</option>
+          <option value="1month">1 Month</option>
+        </select>
+        <br class="ts-mobile-break">
+        <input type="number" id="ts_size" class="ts_custom" style="float:left;width:193px;display:none;" placeholder="Enter Size">
         <br>
         <canvas id="trendsDisplay"></canvas>
       </div>
@@ -63,9 +84,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
-    
     <footer>
-      <p>&copy; 2023 ERROR 404 Currency Converter. All rights not found. No errors, just conversions!</p>
+      <p>&copy; 2023 ERROR 404 Currency Converter. <br id="footer-mobile-break">All rights not found. No errors, just conversions!</p>
       <p>404 Main Street, Conversion City | support@error404currency.com</p>
       <p>Follow us on <a href="https://twitter.com/error404currency" target="_blank">Twitter</a> | Like us on <a href="https://facebook.com/error404currency" target="_blank">Facebook</a></p>
     </footer>

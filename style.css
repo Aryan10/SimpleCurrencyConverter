@@ -19,23 +19,63 @@ footer {
     padding: 20px;
 }
 
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .header {
     position: absolute;
     z-index: -1;
     top: 0px;
     padding-left: 50px;
-    padding-bottom: 20px;
     width: 100%;
-    background-color: #75e6da;
+    background-color: #247cf0;
 }
 
 .select2 {
     width: 320px;
 }
 
+.select1 {
+    float: left;
+    width: 200px;
+    margin-left: 1px;
+    padding-top: 2px;
+    padding-bottom: 1px;
+}
+
+.checklist {
+    padding: 5px;
+    padding-left: 10px;
+    width: 100%;
+    font-size: 20px;
+    border: 1px solid #cccccc;
+}
+
+.checklist:hover {
+    background-color: yellow;
+    cursor: pointer;
+}
+
 .tab {
     width: 120px;
+    height: 29px;
     font-size: 20px;
+    font-weight: bold;
+    float: left;
+    border: none;
+    border-radius: 22px;
+    background-color: transparent;
+    color: white;
+}
+
+.tab:hover {
+    background-color: rgba(174, 205, 245, 0.5);
+    cursor: pointer;
+}
+
+.activetab {
+    background-color: rgba(174, 205, 245, 0.5);
 }
 
 .smallButton {
@@ -46,13 +86,24 @@ footer {
 
 .smallButton:hover {
     background-color: yellow;
+    cursor: pointer;
 }
 
 #deleteButton {
     float: right;
+    margin-top: 3px;
+    margin-right: 5px;
     font-size: 40px;
+    font-weight: bolder;
     color: red;
+    background-color: #ffcccb;
+    border: 3px solid red;
+    border-radius: 10px;
     display: none;
+}
+
+#deleteButton:hover {
+    cursor: pointer;
 }
 
 #convertButton {
@@ -62,6 +113,7 @@ footer {
 
 #convertButton:hover {
     background-color: yellow;
+    cursor: pointer;
 }
 
 #inputAmount {
@@ -74,7 +126,7 @@ footer {
 #outputAmount {
     margin: auto;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc;
     width: 300px;
     text-align: center;
     margin-top: 5px;
@@ -88,13 +140,15 @@ footer {
     display: none;
     text-align: left;
     overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #fffacd;
+    border-radius: 10px;
 }
 
 #activityDiv {
     text-align: center;
     float: right;
-    margin-right: 10px;
-    margin-top: 72px;
+    margin-top: 52px;
 }
 
 #leftDiv {
@@ -121,17 +175,50 @@ footer {
     margin-top: 20px;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 685px) {
+  .ts-mobile-break {
+      display: none;
+  }
+}
+
+@media only screen and (min-width: 610px) {
+  #footer-mobile-break {
+      display: none;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
   footer {
+      margin-top: 16px;
       padding: 0px;
   }
   
+  .tab {
+      width: 120px;
+      height: 29px;
+      font-size: 20px;
+      border: none;
+  }
+  
+  .header {
+      padding-left: 15px;
+      padding-bottom: 20px;
+  }
+  
+  #activityDiv {
+      margin-top: 72px;
+  }
+  
   #activityBox {
-      background-color: cyan;
       position: absolute;
-      z-index: 5;
-      width: 100vw;
+      z-index: 2;
+      margin-top: 28px;
+      left: 5vw;
+      width: 90vw;
       height: 100px;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   }
   
   #leftDiv {
@@ -148,16 +235,10 @@ footer {
   
   #trendsDiv {
       height: auto;
+      border-radius: 7px;
   }
   
   #trendsDisplay {
       max-width: 100%;
   }
-  
 }
-
-
-
-
-
-
