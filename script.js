@@ -102,7 +102,7 @@ async function conversion() {
   localStorage.history = hist;
   if (tab == 1) showHistory();
   
-  updateURL();
+  updateURL(true);
 }
 
 function favouriteExchange() {
@@ -238,9 +238,9 @@ async function displayTrends() {
     let size = document.getElementById("ts_size").value;
     if (interval && size) {
       params.time_series = interval + '-' + size;
-      updateURL();
     }
   }
+  updateURL(true);
   let {from, to} = params;
   let fromRate = res.rates[params.from];
   let toRate = res.rates[params.to];
@@ -289,7 +289,12 @@ function removeArrayElement(array, key) {
   array.splice(array.indexOf(key), 1);
 }
 
-function updateURL() {
+function updateURL(updateParams) {
+  if (updateParams) {
+    params.from = fromC.value;
+    params.to = toC.value;
+    params.amount = amount.value;
+  }
   window.history.pushState({}, document.title, linkExchange());
 }
 
