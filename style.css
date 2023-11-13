@@ -84,7 +84,10 @@ a {
 .smallButton {
     font-size: 18px;
     font-weight: bolder;
-    background-color: #00ffff;
+    border-radius: 18px;
+    color: #006ce0;
+    border: 1px solid #cccccc;
+    background-color: inherit;
 }
 
 .smallButton:hover {
@@ -110,12 +113,19 @@ a {
 }
 
 #convertButton {
-    font-size: 24px;
-    border-radius: 15px;
+    font-size: 20px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 250px;
+    border: none;
+    border-radius: 8px;
+    background-color: #0071d7;
+    color: white;
 }
 
 #convertButton:hover {
-    background-color: yellow;
+    background-color: #4995E1;
     cursor: pointer;
 }
 

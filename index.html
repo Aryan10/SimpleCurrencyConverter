@@ -17,7 +17,7 @@
         <div id="activityTabs">
           <button type="button" id="tab1" class="tab" onclick="showHistory(true)">History</button>
           <button type="button" id="tab2" class="tab" onclick="showFavourites(true)">Favourites</button>
-          <button type="button" id="tab3" class="tab" onclick="showCalculator()">Calculator  </button>
+          <button type="button" id="tab3" class="tab debug" onclick="showCalculator()">Calculator  </button>
         </div>
         <div id="activityBox"></div>
     </div>
@@ -78,6 +78,7 @@
         <br class="ts-mobile-break">
         <input type="number" id="ts_size" class="ts_custom" style="float:left;width:193px;display:none;" placeholder="Enter Size">
         <br>
+        <p id="nocanvas" style="display:none;"></p>
         <canvas id="trendsDisplay"></canvas>
       </div>
     </div>
@@ -86,8 +87,8 @@
     <script src="script.js"></script>
     <footer>
       <p>&copy; 2023 ERROR 404 Currency Converter. <br id="footer-mobile-break">All rights not found. No errors, just conversions!</p>
-      <p>404 Main Street, Conversion City | support@error404currency.com</p>
-      <p>Follow us on <a href="https://twitter.com/error404currency" target="_blank">Twitter</a> | Like us on <a href="https://facebook.com/error404currency" target="_blank">Facebook</a></p>
+      <p>404 Main Street, Conversion City | Made with <a href="https://glitch.com" target="_blank">Glitch</a></p>
+      <p class="debug">Follow us on <a href="https://twitter.com/error404currency" target="_blank">Twitter</a> | Like us on <a href="https://facebook.com/error404currency" target="_blank">Facebook</a></p>
     </footer>
 
 </body>
