@@ -235,6 +235,7 @@ function onTrendsSelect() {
 }
 
 async function displayTrends() {
+  var points = document.getElementById("ts_points").checked;
   if (select_time_series.value == "custom") {
     let interval = document.getElementById("ts_interval").value;
     let size = document.getElementById("ts_size").value;
@@ -243,8 +244,11 @@ async function displayTrends() {
     }
     if (!intervals.includes(interval) || !size) {
       nocanvas.innerHTML = "Nothing to show here. Try changing the parameters.";
-      $('#nocanvas').show();
-      return;
+      return $('#nocanvas').show();
+    }
+    if (size > 5000 || String(size).includes('.')) {
+      nocanvas.innerHTML = "Nothing to show here. Size must be integer between 1 and 5000.";
+      return $('#nocanvas').show();
     }
   }
   updateURL(true);
@@ -267,8 +271,7 @@ async function displayTrends() {
   let labels = [], data = [];
   if (trend.status != 'ok') {
     nocanvas.innerHTML = "Nothing to show here. Try changing the currencies!";
-    $('#nocanvas').show();
-    return;
+    return $('#nocanvas').show();
   }
   $('#nocanvas').hide();
   trend.values.forEach(d => {
@@ -287,11 +290,21 @@ async function displayTrends() {
         data,
         borderWidth: 1
       }]
-    }
+    },
+    options: {}
   }
+  if (!points) config.options = {
+    elements: {
+      point: {
+        radius: 0.1
+      }
+    }
+  };
+  else config.options = {};
   if (!chart) chart = new Chart(canvas, config);
   else {
     chart.data = config.data;
+    chart.options = config.options;
     chart.update();
   }
 }
