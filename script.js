@@ -74,9 +74,9 @@ async function main() {
   $('#toCurrency').val(params.to).trigger('change');
   $('#inputAmount').val(params.amount).trigger('change');
   $('#time_series').val(params.time_series).trigger('change');
-  if ($("#time_series option:selected").text().toLowerCase().startsWith('c') && !debug) displayTrends();
   document.getElementById("switchselect").innerHTML = symbols.swap;
   $('#activityBox').hide();
+  displayTrends();
 }
 
 // // Converter Division
@@ -231,7 +231,6 @@ function onTrendsSelect() {
   else $('.ts_custom').hide();
   params.time_series = sel;
   updateURL();
-  if (!debug) displayTrends();
 }
 
 async function displayTrends() {
@@ -270,7 +269,15 @@ async function displayTrends() {
   let trend = await fetched.json();
   let labels = [], data = [];
   if (trend.status != 'ok') {
-    nocanvas.innerHTML = "Nothing to show here. Try changing the currencies!";
+    switch(trend.code) {
+      case 404:
+        nocanvas.innerHTML = "<h3>ERROR 404</h3>Nothing to show here. Try changing the currencies!";
+        break;
+        
+      case 429:
+        nocanvas.innerHTML = "<h3>ERROR 429</h3>Too many API requests! Please wait a minute.";
+        break;
+    }
     return $('#nocanvas').show();
   }
   $('#nocanvas').hide();
