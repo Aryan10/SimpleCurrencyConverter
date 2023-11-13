@@ -1,4 +1,4 @@
-const debug = true;
+const debug = false;
 
 const api = "https://api.exchangerate-api.com/v4/latest/USD";
 const trendsapi = (from, to, interval, outputsize) => `https://api.twelvedata.com/time_series?symbol=${from}/${to}&interval=${interval}&outputsize=${outputsize}&apikey=493a052a7b904dd08d6b48ec2d81a867`
@@ -74,6 +74,7 @@ async function main() {
   $('#toCurrency').val(params.to).trigger('change');
   $('#inputAmount').val(params.amount).trigger('change');
   $('#time_series').val(params.time_series).trigger('change');
+  if ($("#time_series option:selected").text().toLowerCase().startsWith('c') && !debug) displayTrends();
   document.getElementById("switchselect").innerHTML = symbols.swap;
   $('#activityBox').hide();
 }
@@ -215,6 +216,7 @@ function linkExchangeHTML(array, idkey) {
 // // Trends Division
 var chart;
 let intervals = ["1min", "5min", "15min", "30min", "45min", "1h", "2h", "4h", "8h", "1day", "1week", "1month"];
+var nocanvas = document.getElementById("nocanvas");
 
 function onTrendsSelect() {
   let sel = select_time_series.value;
@@ -239,6 +241,11 @@ async function displayTrends() {
     if (interval && size) {
       params.time_series = interval + '-' + size;
     }
+    if (!intervals.includes(interval) || !size) {
+      nocanvas.innerHTML = "Nothing to show here. Try changing the parameters.";
+      $('#nocanvas').show();
+      return;
+    }
   }
   updateURL(true);
   let {from, to} = params;
@@ -258,7 +265,12 @@ async function displayTrends() {
   let fetched = await fetch(trendyurl);
   let trend = await fetched.json();
   let labels = [], data = [];
-  if (trend.status != 'ok') return;
+  if (trend.status != 'ok') {
+    nocanvas.innerHTML = "Nothing to show here. Try changing the currencies!";
+    $('#nocanvas').show();
+    return;
+  }
+  $('#nocanvas').hide();
   trend.values.forEach(d => {
     labels.push(labelDateParser(d.datetime, val[0].slice(index)));
     data.push(d.close);
@@ -341,7 +353,7 @@ main();
 
 $(function () {
   $(".select2").select2();
-  if (debug) $(".debug").show();
+  if (!debug) $(".debug").hide();
 });
 
 const symbols = {
