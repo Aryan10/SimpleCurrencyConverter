@@ -97,7 +97,7 @@ a {
 
 #deleteButton {
     float: right;
-    margin-top: 3px;
+    margin-top: 266px;
     margin-right: 5px;
     font-size: 40px;
     font-weight: bolder;
@@ -221,6 +221,10 @@ a {
   
   .select1 {
       padding: 0px;
+  }
+  
+  #deleteButton {
+      margin-top: 94px;
   }
   
   #activityDiv {

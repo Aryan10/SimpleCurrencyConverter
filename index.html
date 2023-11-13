@@ -76,9 +76,13 @@
           <option value="1month">1 Month</option>
         </select>
         <br class="ts-mobile-break">
+        <span style="float:right;border:1px solid #CCC;padding-right:3px;margin-right:5px;">
+          <input type="checkbox" id="ts_points" checked>
+          <label for="ts_points">POINTS</label>
+        </span>
         <input type="number" id="ts_size" class="ts_custom" style="float:left;width:193px;display:none;" placeholder="Enter Size">
         <br>
-        <p id="nocanvas" style="display:none;"></p>
+        <p id="nocanvas" style="display:none;cursor:progress;"></p>
         <canvas id="trendsDisplay"></canvas>
       </div>
     </div>
