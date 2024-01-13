@@ -13,7 +13,7 @@ Event @ MNNIT
 
 • Team Leader, Project Manager, Website Administrator
 
-• Fullstack Developer, JavaScript Lead Developer
+• JavaScript Lead Developer, HTML/CSS Developer
 
 [Vansh Gupta](https://github.com/Vansh07Gupta)
 `20233303`
