@@ -20,7 +20,7 @@ Event @ MNNIT
 
 • HTML Lead Developer, CSS Developer
 
-[Kumaradithya Chadalavada](https://github.com/clashking9999)
+[Kumaradithya Chadalavada](https://github.com/kumarchad)
 `20233531`
 
 • CSS Developer
