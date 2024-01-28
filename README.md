@@ -11,14 +11,12 @@ Event @ MNNIT
 [Aryan 10](https://github.com/Aryan10)
 `20233265`
 
-• Team Leader, Project Manager, Website Administrator
-
-• JavaScript Lead Developer, HTML/CSS Developer
+• Team Leader, Project Manager, Website Administrator, JavaScript Developer, HTML/CSS Developer
 
 [Vansh Gupta](https://github.com/Vansh07Gupta)
 `20233303`
 
-• HTML Lead Developer, CSS Developer
+• HTML Developer, CSS Developer
 
 [Kumaradithya Chadalavada](https://github.com/kumarchad)
 `20233531`
