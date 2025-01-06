@@ -1,29 +1,11 @@
-# [CodeSangam2023](https://sac.mnnit.ac.in/codesangam)/Webster
+[Also hosted on Glitch](https://webster-error404.glitch.me)
 
-Event @ MNNIT
+This project was made for Webster First Year of CodeSangam 2023 :)
 
-# Team: <Error 404>
+### Developers
 
-`Team ID: 108`
-
-### Members
-
-[Aryan 10](https://github.com/Aryan10)
-`20233265`
-
-• Team Leader, Project Manager, Website Administrator, JavaScript Developer, HTML/CSS Developer
+[Shivam Aryan](https://github.com/Aryan10)
 
 [Vansh Gupta](https://github.com/Vansh07Gupta)
-`20233303`
-
-• HTML Developer, CSS Developer
 
 [Kumaradithya Chadalavada](https://github.com/kumarchad)
-`20233531`
-
-• CSS Developer
-
-
-## Project Overview
-
-### [Currency Converter](https://webster-error404.glitch.me)
